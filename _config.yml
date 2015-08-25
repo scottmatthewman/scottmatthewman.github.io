@@ -10,7 +10,7 @@ github_username:  scottmatthewman
 
 # Build settings
 markdown: kramdown
+highlighter: pygments
 
 gems:
   - octopress-solarized
-  - octopress-codefence

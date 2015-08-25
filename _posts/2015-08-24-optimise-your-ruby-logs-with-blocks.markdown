@@ -6,9 +6,9 @@ date: 2015-08-24T13:36:09+01:00
 
 When adding logger statements to Ruby or Rails apps, we're used to providing interpolated strings to whichever method matches the status level of our message:
 
-```ruby
+{% highlight ruby %}
 logger.info "Number of items matching our requirements: #{items.count(&:valid?)}"
-```
+{% endhighlight %}
 
 Whether or not this string gets output to the log is dependent on the logger instance's `#level` property, which can vary (say, between development and production environments).
 
@@ -16,7 +16,7 @@ However, even if the `logger.level` determines that the text should not be outpu
 
 As an alternative, each of the `Logger` class's logging methods can take a block that returns a string. This block will only be called, and any Ruby code within will only be executed, if the severity is of a sufficient level to be output to the log:
 
-```ruby
+{% highlight ruby %}
 logger.level = Logger::WARN
 
 # String parameter - Calculated, but not displayed
@@ -24,7 +24,7 @@ logger.debug "Retrieved items: #{items.inspect}"
 
 # Block - Skipped completely
 logger.debug { "Retrieved items: #{items.inspect}" }
-```
+{% endhighlight %}
 
 So if your debugging messages are expensive in terms of processing, leaving them _in situ_ in production code won't affect your application's overall performance as long as you're mindful of your server's logging level.
 
