@@ -1,0 +1,16 @@
+# Site settings
+title: Scott Codes
+email: scott@matthewman.net
+description: > # this means to ignore newlines until "baseurl:"
+  General coding things, usually in Ruby, that come out of my head.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://scottmatthewman.github.io" # the base hostname & protocol for your site
+twitter_username: scottm
+github_username:  scottmatthewman
+
+# Build settings
+markdown: kramdown
+
+gems:
+  - octopress-solarized
+  - octopress-codefence
