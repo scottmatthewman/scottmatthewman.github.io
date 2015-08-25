@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Scott Codes</title>
-  <meta name="description" content="General coding things, usually in Ruby, that come out of my head.
-">
+  <title>Using Bundler to add gem dependencies inline</title>
+  <meta name="description" content="As Rails developers, we are used to using Bundler within applications to manage Gemfile dependencies within our projects.">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://scottmatthewman.github.io/">
+  <link rel="canonical" href="http://scottmatthewman.github.io/2015/08/25/using-bundler-to-add-gem-dependencies-inline.html">
   <link rel="alternate" type="application/rss+xml" title="Scott Codes" href="http://scottmatthewman.github.io/feed.xml" />
 </head>
 
@@ -49,31 +48,43 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">Using Bundler to add gem dependencies inline</h1>
+    <p class="post-meta">Aug 25, 2015</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Aug 25, 2015</span>
+  <article class="post-content">
+    <p>As Rails developers, we are used to using <a href="http://bundler.io">Bundler</a> within applications to manage Gemfile dependencies within our projects.</p>
 
-        <h2>
-          <a class="post-link" href="/2015/08/25/using-bundler-to-add-gem-dependencies-inline.html">Using Bundler to add gem dependencies inline</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Aug 24, 2015</span>
+<p>The conventional approach is to have a <code>Gemfile</code> in the root folder of our project, then use <code>bundle install</code> (and associated methods) to manage downloading, installation and version control of dependencies.</p>
 
-        <h2>
-          <a class="post-link" href="/2015/08/24/optimise-your-ruby-logs-with-blocks.html">Optimise your Ruby logs with blocks</a>
-        </h2>
-      </li>
-    
-  </ul>
+<p>However, with version 1.10 of Bundler there is now a way for single-file scripts to include their own gemfile inline, and can optionally install the correct gems upon the script’s first execution.</p>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+<p>To use it, the command <code>require 'bundler/inline'</code> should be the first command in the file, followed by a <code>gemfile { ... }</code> block, the contents of which follow the usual Gemfile DSL:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#!/usr/bin/env ruby</span>
+<span class="nb">require</span> <span class="s1">&#39;bundler/inline&#39;</span>
+
+<span class="c1"># use `gemfile(true) do...` for the script to install missing gems</span>
+<span class="n">gemfile</span> <span class="k">do</span>
+  <span class="n">source</span> <span class="s1">&#39;https://rubygems.org&#39;</span>
+  <span class="n">gem</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
+  <span class="n">gem</span> <span class="s1">&#39;nap&#39;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="s1">&#39;rest&#39;</span>
+  <span class="n">gem</span> <span class="s1">&#39;cocoapods&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 0.34.1&#39;</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="no">Pod</span><span class="o">::</span><span class="no">VERSION</span> <span class="c1"># =&gt; &quot;0.34.4&quot;</span></code></pre></div>
+
+<p>(Example from the <a href="https://github.com/bundler/bundler/blob/master/lib/bundler/inline.rb"><code>bundler/inline</code> documentation</a>).</p>
+
+<p>The downside to this approach is that no <code>Gemfile.lock</code> file is produced. As a result, we shoould probably be ultra-pessimistic when specifying version constraints on each gem.</p>
+
+<p>For a small utility whose function can fit into a single script file, including the utility’s gem dependencies within the same file could be useful.</p>
+
+
+  </article>
 
 </div>
 
