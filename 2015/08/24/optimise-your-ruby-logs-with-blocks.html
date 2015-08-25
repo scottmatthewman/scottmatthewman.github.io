@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Optimise your Ruby logs with blocks</title>
-  <meta name="description" content="When adding logger statements to Ruby or Rails apps, we’re used to providing interpolated strings to whichever method matches the status level of our message:">
+  <meta name="description" content="When adding logger statements to Ruby or Rails apps, we&#39;re used to providing interpolated strings to whichever method matches the status level of our mes...">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://scottmatthewman.github.io/2015/08/24/optimise-your-ruby-logs-with-blocks.html">
@@ -56,26 +56,27 @@
   </header>
 
   <article class="post-content">
-    <p>When adding logger statements to Ruby or Rails apps, we’re used to providing interpolated strings to whichever method matches the status level of our message:</p>
+    <p>When adding logger statements to Ruby or Rails apps, we&#39;re used to providing interpolated strings to whichever method matches the status level of our message:</p>
 
-<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">logger</span><span class="o">.</span><span class="n">info</span> <span class="s2">&quot;Number of items matching our requirements: </span><span class="si">#&#x7b;</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:valid?</span><span class="p">)</span><span class="si">&#x7d;</span><span class="s2">&quot;</span></div></div></pre></div></figure>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">logger</span><span class="o">.</span><span class="n">info</span> <span class="s2">&quot;Number of items matching our requirements: </span><span class="si">#{</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:valid?</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></code></pre></div>
 
-<p>Whether or not this string gets output to the log is dependent on the logger instance’s <code>#level</code> property, which can vary (say, between development and production environments).</p>
+<p>Whether or not this string gets output to the log is dependent on the logger instance&#39;s <code>#level</code> property, which can vary (say, between development and production environments).</p>
 
 <p>However, even if the <code>logger.level</code> determines that the text should not be output to the log, any ruby code called by the interpolated string will still be executed.</p>
 
-<p>As an alternative, each of the <code>Logger</code> class’s logging methods can take a block that returns a string. This block will only be called, and any Ruby code within will only be executed, if the severity is of a sufficient level to be output to the log:</p>
+<p>As an alternative, each of the <code>Logger</code> class&#39;s logging methods can take a block that returns a string. This block will only be called, and any Ruby code within will only be executed, if the severity is of a sufficient level to be output to the log:</p>
 
-<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">::</span><span class="no">WARN</span>
-</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c1"># String parameter - Calculated, but not displayed</span>
-</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">logger</span><span class="o">.</span><span class="n">debug</span> <span class="s2">&quot;Retrieved items: </span><span class="si">#&#x7b;</span><span class="n">items</span><span class="o">.</span><span class="n">inspect</span><span class="si">&#x7d;</span><span class="s2">&quot;</span>
-</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="c1"># Block - Skipped completely</span>
-</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">logger</span><span class="o">.</span><span class="n">debug</span> <span class="p">&#x7b;</span> <span class="s2">&quot;Retrieved items: </span><span class="si">#&#x7b;</span><span class="n">items</span><span class="o">.</span><span class="n">inspect</span><span class="si">&#x7d;</span><span class="s2">&quot;</span> <span class="p">&#x7d;</span></div></div></pre></div></figure>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">::</span><span class="no">WARN</span>
 
-<p>So if your debugging messages are expensive in terms of processing, leaving them <em>in situ</em> in production code won’t affect your application’s overall performance as long as you’re mindful of your server’s logging level.</p>
+<span class="c1"># String parameter - Calculated, but not displayed</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span> <span class="s2">&quot;Retrieved items: </span><span class="si">#{</span><span class="n">items</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># Block - Skipped completely</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span> <span class="p">{</span> <span class="s2">&quot;Retrieved items: </span><span class="si">#{</span><span class="n">items</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span></code></pre></div>
+
+<p>So if your debugging messages are expensive in terms of processing, leaving them <em>in situ</em> in production code won&#39;t affect your application&#39;s overall performance as long as you&#39;re mindful of your server&#39;s logging level.</p>
 
 <p><em>This blog post came out of <a href="https://github.com/altmetric/til/blob/master/ruby/logger_blocks.md">an entry</a> in the <a href="https://github.com/altmetric/til">Altmetric TIL (Today I Learned) library</a>, an open source collection of knowledge that Altmetric developers have stumbled across in our working days. Feel free to have a look around!</em></p>
-
 
   </article>
 
