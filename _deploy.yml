@@ -1,0 +1,4 @@
+method: git
+site_dir: _site
+git_url: git@github.com:scottmatthewman/scottmatthewman.github.io.git
+git_branch: gh-pages
