@@ -29,6 +29,10 @@ Here's a rough plan of some of the topics I plan to cover:
 
 I'll be tweeting out links to each from my own Twitter account, [@scottm][] – although be aware, you're likely to find that a whole lot of noise and not much signal.
 
+* _If you want to come along to the LRUG meeting, please visit the [LRUG venue and registration][LRUG-venue] section to acquaint yourself with the venue details, code of conduct, etc., then [register with meeting host **SkillsMatter**][SkillsMatter]_
+
 [LRUG]: http://lrug.org/meetings/2015/november/
+[LRUG-venue]: http://lrug.org/meetings/2015/november/#nov15registration
+[SkillsMatter]: https://skillsmatter.com/meetups/7413-lrug-november-2015-meeting
 [altmetricdev]: https://twitter.com/AltmetricDev/
 [@scottm]: https://twitter.com/scottm/
