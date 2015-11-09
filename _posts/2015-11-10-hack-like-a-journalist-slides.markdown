@@ -4,7 +4,7 @@ title: "Hack like a journalist: The slides"
 date: 2015-11-09T20:00:00+00:00
 ---
 
-_Behold the slides to my talk at [Monday's LRUG meeting][lrug-nov], as previously [mentioned][coming-soon]_.
+Behold the slides to my talk at [Monday's LRUG meeting][lrug-nov], as previously [mentioned][coming-soon]. They're available as a PDF download from the [Speaker Deck page](https://speakerdeck.com/scottmatthewman/hack-like-a-journalist).
 
 Unfortunately, the links don't click on the embedded slide deck, so I've detailed them below.
 
